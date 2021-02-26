@@ -1,16 +1,12 @@
 
 import React from 'react';
 import {SafeAreaView,Text,StatusBar,} from 'react-native';
+import { SplashScreen } from './pages';
 
 
 const App = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Text>Hello World</Text>
-      </SafeAreaView>
-    </>
+   <SplashScreen/>
   );
 };
 
