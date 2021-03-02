@@ -10,7 +10,7 @@ const SplashScreen = () => {
            <Logo/>
            <View style={{ height:38 }} />
             <Text style={{fontSize:32, color:'#020202', fontFamily:'Poppins-Medium'}}
-                >RSU Marketer</Text>
+                >RSU Market</Text>
         </View>
     )
 }
