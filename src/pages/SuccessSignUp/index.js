@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { IlSuccessSignUp } from '../../assets'
 import { Button } from '../../components'
 
-const SuccessSignUp = () => {
+const SuccessSignUp = ({navigation}) => {
     return (
         <View style={styles.page}>
             <IlSuccessSignUp/>
@@ -14,7 +14,7 @@ const SuccessSignUp = () => {
             <Text style={styles.subTitle} >some foods as a self-reward</Text>
            
            <View style={styles.buttonContainer} >
-           <Button text="Find Foods" />
+           <Button text="Find Foods" onPress={()=>navigation.replace('MainApp')}  />
            </View>
             
         </View>
