@@ -16,7 +16,7 @@ const SplashScreen = ({navigation}) => {
            <Logo/>
            <View style={{ height:38 }} />
             <Text style={{fontSize:32, color:'#020202', fontFamily:'Poppins-Medium'}}
-                >RSU Market</Text>
+                >Desy Market</Text>
         </View>
     )
 }
