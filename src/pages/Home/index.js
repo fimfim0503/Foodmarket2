@@ -1,42 +1,18 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions} from 'react-native'
-import {FoodDummy1, FoodDummy2, FoodDummy3, FoodDummy4, ProfileDummy} from '../../assets'
-import {FoodCard, Gap} from '../../components'
-import { TabView, SceneMap } from 'react-native-tab-view';
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { FoodDummy1, FoodDummy2, FoodDummy3, FoodDummy4 } from '../../assets';
+import { FoodCard, Gap, HomeProfile, HomeTabSection } from '../../components';
 
-const FirstRoute = () => (
-    <View style={{ backgroundColor: '#ff4081', flex:1 }} />
-  );
-   
-  const SecondRoute = () => (
-    <View style={{ backgroundColor: '#673ab7', flex:1 }} />
-  );
-   
-  const initialLayout = { width: Dimensions.get('window').width };
+
 
 const Home = () => {
-    const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: '1', title: 'New Taste' },
-    { key: '2', title: 'Popular' },
-    { key: '3', title: 'Recommended' },
-  ]);
- 
-  const renderScene = SceneMap({
-    1: FirstRoute,
-    2: SecondRoute,
-    3: FirstRoute,
-  });
+    
 
     return (
+        <ScrollView>
+
         <View style={styles.page} >
-            <View style={styles.profileContainer} >
-                <View>
-                    <Text style={styles.Appname} >Food Market</Text>
-                    <Text style={styles.dec} >Let's get some foods </Text>
-                </View>
-                <Image source={ProfileDummy} styles={styles.profile} />
-            </View>
+            <HomeProfile/>
             <View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} >
                 <View style={styles.FoodCardContainer} >
@@ -51,14 +27,10 @@ const Home = () => {
 
             </View>
             <View style={styles.tabContainer} >
-                <TabView
-                    navigationState={{ index, routes }}
-                    renderScene={renderScene}
-                    onIndexChange={setIndex}
-                    initialLayout={initialLayout}
-                    />
+               <HomeTabSection/>
             </View>
         </View>
+        </ScrollView>
     )
 }
 
@@ -67,7 +39,7 @@ export default Home
 const styles = StyleSheet.create({
     page:{
         flex:1,
-        backgroundColor:'yellow'
+        
     },
     profile:{
         width:50,
