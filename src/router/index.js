@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import { FoodDetail, Home, Order, OrderSummary, Profile, SignIn, SignUp, SignUpAddress, SplashScreen, SuccessSignUp } from '../pages';
+import { FoodDetail, Home, Order, OrderSummary, Profile, SignIn, SignUp, SignUpAddress, SplashScreen, SuccessOrder, SuccessSignUp } from '../pages';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ButtomNavigator } from '../components';
 
@@ -59,6 +59,11 @@ const Router = () => {
             <Stack.Screen 
             name="OrderSummary" 
             component={OrderSummary}
+            options={{ headerShown:false }}
+            />
+            <Stack.Screen 
+            name="SuccessOrder" 
+            component={SuccessOrder}
             options={{ headerShown:false }}
             />
         </Stack.Navigator>
