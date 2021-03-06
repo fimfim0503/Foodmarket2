@@ -20,7 +20,7 @@ const SuccessOrder = ({navigation}) => {
            <View style={styles.buttonContainer} >
            <Button 
                 text="View My Order" 
-                onPress={()=>navigation.replace('MainApp')}  
+                onPress={()=>navigation.replace('MainApp', {screen:'Order'})}  
                 color="#8D92A3"
                 textColor="white"
                 />
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
        
         flex:1,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        backgroundColor:'white'
     },
     title:{
         fontSize:20,

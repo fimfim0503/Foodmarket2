@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
         flex:1
     },
     page:{
-        flex:1
+        flex:1,
+        backgroundColor:'white'
     },
     addFhoto:{
         fontSize:14,
