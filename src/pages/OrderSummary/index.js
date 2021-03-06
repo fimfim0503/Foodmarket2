@@ -1,11 +1,11 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { FoodDummy1 } from '../../assets';
-import {Button, Header, ItemListFood, ItemValue} from '../../components';
+import {Button, Gap, Header, ItemListFood, ItemValue} from '../../components';
 
 const OrderSummary = ({navigation}) => {
     return (
-        <View>
+        <ScrollView>
             <Header
             title="Payment"
             subTitle="You Deserve better meal"
@@ -43,7 +43,8 @@ const OrderSummary = ({navigation}) => {
             <View style={styles.button}>
                 <Button text="Check OUt Now" onPress={()=>navigation.replace('SuccessOrder')} />
             </View>
-        </View>
+            <Gap height={40} />
+        </ScrollView>
     )
 }
 
