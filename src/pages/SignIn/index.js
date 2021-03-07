@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Header, TextInput, Button, Gap } from '../../components'
+
+import Axios from 'axios';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Gap, Header, TextInput } from '../../components';
 import { useForm } from '../../Utils';
 
 const SignIn = ({navigation}) => {
@@ -14,7 +16,15 @@ const SignIn = ({navigation}) => {
 
 
     const onSubmit =()=> {
-        console.log('form :', form);
+         console.log('form :', form);
+         
+        Axios.post('http://10.0.2.2/foodbackend/public/api/login', form)
+        .then(res=>{
+            console.log('success', res);
+        })
+        .catch(err=>{   
+            console.log('error', err)
+        })
        
     }
     return (
