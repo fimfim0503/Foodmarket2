@@ -5,15 +5,18 @@ import {SafeAreaView,Text,StatusBar,} from 'react-native';
 import { SplashScreen, SignIn } from './pages';
 import { NavigationContainer } from '@react-navigation/native';
 import Router from './router';
+import {Provider} from 'react-redux';
+import store from './redux/store';
 
 
 
 
 const App = () => {
   return (
-    
     <NavigationContainer>
-     <Router/>
+      <Provider store={store}>
+          <Router/>
+      </Provider>
     </NavigationContainer>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { FoodDummy1 } from '../../assets';
 import {Button, Gap, Header, ItemListFood, ItemValue} from '../../components';
 
