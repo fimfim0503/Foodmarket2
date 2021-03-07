@@ -1,12 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import {Header, TextInput, Gap, Button} from '../../components';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {useForm} from '../../Utils';
 
 const SignUp = ({navigation}) => {
-    const globalState=useSelector(state =>state.globalReducer);
-    console.log('global: ', globalState);
+    const [form, setForm] = useForm({
+        name:'',
+        email:'',
+        password:'',
+    });
+
+    const dispatch = useDispatch();
+
+    const onSubmit = () =>{
+        console.log('form : ', form);
+        dispatch({type:'SET_REGISTER', value: form})
+        navigation.navigate('SignUpAddress');
+    };
+
     return (
+        <ScrollView contentContainerStyle={{flexGrow:1}}>
+
         <View style={styles.page}>
             <Header title="Sign Up" subTitle="Register and Eat" onBack={()=>{}} />
             <View style={styles.container} >
@@ -17,16 +32,38 @@ const SignUp = ({navigation}) => {
                         </View>
                     </View>
                 </View>
-                <TextInput label="Full Name" placeholder="Full Name"/>
+                <TextInput 
+                label="Full Name" 
+                placeholder="Full Name"
+                value={form.name}
+                onChangeText={(value)=> setForm('name', value)}
+
+                />
                 <Gap height={16} />
-                <TextInput label="Email Address" placeholder="Type your email address"/>
+
+                <TextInput 
+                label="Email Address" 
+                placeholder="Type your email address"
+                value={form.email}
+                onChangeText={(value)=> setForm('email', value)}
+                />
+
                 <Gap height={16} />
-                <TextInput label="Password" placeholder="Type Your Password"/>
+
+                <TextInput 
+                label="Password" 
+                placeholder="Type Your Password"
+                value={form.password}
+                onChangeText={(value)=> setForm('password', value)}
+                secureTextEntry
+                />
+
                 <Gap height={24} />
-                <Button text="Continue" onPress={()=>navigation.navigate('SignUpAddress')} />
+                <Button text="Continue" onPress={onSubmit} />
                 
             </View>
         </View>
+        </ScrollView>
 
         
         
