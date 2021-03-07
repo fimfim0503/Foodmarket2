@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import {Header, TextInput, Gap, Button, Select} from '../../components';
 import { useForm } from '../../Utils';
 import {useDispatch, useSelector} from 'react-redux';
+import Axios from 'axios';
 
 const SingUpAddress = ({navigation}) => {
     const [form, setForm] = useForm({
@@ -22,7 +23,14 @@ const SingUpAddress = ({navigation}) => {
             ...registerReducer
         }
         console.log('data Register : ', data)
-        //navigation.replace('SuccessSignUp')
+        Axios.post('http://10.0.2.2/foodbackend/public/api/register', data)
+        .then((res)=>{
+            console.log('data succes :',res.data);
+            navigation.replace('SuccessSignUp');
+        })
+        .catch((err)=> {
+            console.log('Sign Up error : ', err);
+        })
     }
 
     return (
