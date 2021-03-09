@@ -1,9 +1,10 @@
-import React from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import {Header, TextInput, Gap, Button, Select} from '../../components';
-import { useForm } from '../../Utils';
-import {useDispatch, useSelector} from 'react-redux';
 import Axios from 'axios';
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Gap, Header, Select, TextInput } from '../../components';
+import { useForm } from '../../Utils';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const SingUpAddress = ({navigation}) => {
     const [form, setForm] = useForm({
@@ -23,16 +24,25 @@ const SingUpAddress = ({navigation}) => {
             ...registerReducer
         }
         console.log('data Register : ', data)
-        Axios.post('http://10.0.2.2/foodbackend/public/api/register', data)
+        Axios.post('http://10.0.2.2/foodmarket4/public/api/register', data)
         .then((res)=>{
             console.log('data succes :',res.data);
+            showMessage('Register success', 'success')
             navigation.replace('SuccessSignUp');
         })
         .catch((err)=> {
-            console.log('Sign Up error : ', err);
+            console.log('Sign Up error : ', err.response.data.message);
+            showToast("Something wrong");
         })
     }
 
+    const showToast = (message, type)=>{
+        showMessage({
+            message : message,
+            type: type === 'success' ? 'success' : 'danger' ,
+            backgroundColor : type === 'success' ? '#1ABC9c' : '#d9435e'
+          });
+    }
     return (
         <ScrollView contentContainerStyle={{flexGrow:1}} >
 
