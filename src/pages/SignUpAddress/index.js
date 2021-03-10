@@ -3,8 +3,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Gap, Header, Select, TextInput } from '../../components';
-import { useForm } from '../../Utils';
-import { showMessage, hideMessage } from "react-native-flash-message";
+import { showMessage, useForm } from '../../Utils';
 
 const SingUpAddress = ({navigation}) => {
     const [form, setForm] = useForm({
@@ -15,7 +14,7 @@ const SingUpAddress = ({navigation}) => {
     })
 
     const dispatch=useDispatch();
-    const registerReducer=useSelector(state=>state.registerReducer)
+    const {registerReducer, photoReducer}=useSelector((state)=>state);
 
    const onSubmit = () => {
         console.log('form: ', form);
@@ -28,6 +27,26 @@ const SingUpAddress = ({navigation}) => {
         Axios.post('http://10.0.2.2/foodmarket4/public/api/register', data)
         .then((res)=>{
             console.log('data succes :',res.data);
+                if ( photoReducer.isUploadPhoto){
+
+                    const photoForUpload = new FormData();
+                    photoForUpload.append('file', photoReducer );
+                    Axios.post('http://10.0.2.2/foodmarket4/public/api/user/photo', 
+                    photoForUpload, 
+                    {
+                        headers:{
+                            'Authorization' :`${res.data.data.token_type} ${res.data.data.access_token}` , 
+                            'Content-Type' : 'multipart/form-data',
+                        },
+                    })
+                    .then((resUpload) => {
+                        console.log('succes upload : ', resUpload)
+                    })
+                    .catch((err) =>{
+                        console.log('error upload : ', err)
+                        showMessage('Upload photo tidak berhasil')
+                    });
+                }
             dispatch({type: 'SET_LOADING', value:false})
             showMessage('Register success', 'success')
             navigation.replace('SuccessSignUp');
@@ -39,13 +58,7 @@ const SingUpAddress = ({navigation}) => {
         })
     }
 
-    const showToast = (message, type)=>{
-        showMessage({
-            message : message,
-            type: type === 'success' ? 'success' : 'danger' ,
-            backgroundColor : type === 'success' ? '#1ABC9c' : '#d9435e'
-          });
-    }
+   
     return (
         <ScrollView contentContainerStyle={{flexGrow:1}} >
 
