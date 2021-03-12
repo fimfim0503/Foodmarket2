@@ -3,6 +3,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Gap, Header, Select, TextInput } from '../../components';
+import { setLoading, signUpAction } from '../../redux/action';
 import { showMessage, useForm } from '../../Utils';
 
 const SingUpAddress = ({navigation}) => {
@@ -14,7 +15,7 @@ const SingUpAddress = ({navigation}) => {
     })
 
     const dispatch=useDispatch();
-    const {registerReducer, photoReducer}=useSelector((state)=>state);
+    const {registerReducer, photoReducer} = useSelector((state)=> state);
 
    const onSubmit = () => {
         console.log('form: ', form);
@@ -23,39 +24,40 @@ const SingUpAddress = ({navigation}) => {
             ...registerReducer
         }
         console.log('data Register : ', data)
-        dispatch({type: 'SET_LOADING', value:true})
-        Axios.post('http://10.0.2.2/foodmarket4/public/api/register', data)
-        .then((res)=>{
-            console.log('data succes :',res.data);
-                if ( photoReducer.isUploadPhoto){
+        dispatch(setLoading(true))
+        dispatch(signUpAction(data, photoReducer, navigation));
+        // Axios.post('http://10.0.2.2/foodmarket4/public/api/register', data)
+        // .then((res)=>{
+        //     console.log('data succes :',res.data);
+        //         if ( photoReducer.isUploadPhoto){
 
-                    const photoForUpload = new FormData();
-                    photoForUpload.append('file', photoReducer );
-                    Axios.post('http://10.0.2.2/foodmarket4/public/api/user/photo', 
-                    photoForUpload, 
-                    {
-                        headers:{
-                            'Authorization' :`${res.data.data.token_type} ${res.data.data.access_token}` , 
-                            'Content-Type' : 'multipart/form-data',
-                        },
-                    })
-                    .then((resUpload) => {
-                        console.log('succes upload : ', resUpload)
-                    })
-                    .catch((err) =>{
-                        console.log('error upload : ', err)
-                        showMessage('Upload photo tidak berhasil')
-                    });
-                }
-            dispatch({type: 'SET_LOADING', value:false})
-            showMessage('Register success', 'success')
-            navigation.replace('SuccessSignUp');
-        })
-        .catch((err)=> {
-            console.log('Sign Up error : ', err.response.data.message);
-            dispatch({type: 'SET_LOADING', value:false})
-            showToast("Something wrong");
-        })
+        //             const photoForUpload = new FormData();
+        //             photoForUpload.append('file', photoReducer );
+        //             Axios.post('http://10.0.2.2/foodmarket4/public/api/user/photo', 
+        //             photoForUpload, 
+        //             {
+        //                 headers:{
+        //                     'Authorization' :`${res.data.data.token_type} ${res.data.data.access_token}` , 
+        //                     'Content-Type' : 'multipart/form-data',
+        //                 },
+        //             })
+        //             .then((resUpload) => {
+        //                 console.log('succes upload : ', resUpload)
+        //             })
+        //             .catch((err) =>{
+        //                 console.log('error upload : ', err)
+        //                 showMessage('Upload photo tidak berhasil')
+        //             });
+        //         }
+        //     dispatch(setLoading(false));
+        //     showMessage('Register success', 'success')
+        //     navigation.replace('SuccessSignUp');
+        // })
+        // .catch((err)=> {
+        //     console.log('Sign Up error : ', err.response.data.message);
+        //     dispatch(setLoading(false));
+        //     showMessage("Something wrong");
+        // })
     }
 
    

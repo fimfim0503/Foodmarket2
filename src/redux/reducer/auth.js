@@ -28,7 +28,7 @@ const initPhoto = {
     isUploadPhoto:false,
 }
 
-export const photoReducer = (state=initPhoto, action)=> {
+export const photoReducer = (state = initPhoto, action)=> {
     if(action.type === 'SET_PHOTO'){
         return {
             ...state,

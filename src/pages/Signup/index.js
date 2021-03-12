@@ -26,9 +26,9 @@ const SignUp = ({navigation}) => {
     const addPhoto = () => {
         launchImageLibrary(
         {
-            // quality:0.5,
-            // maxWidth:200,
-            // maxHeight:200
+            quality:0.5,
+            maxWidth:200,
+            maxHeight:200
         }, (response)=>{
             console.log('Response = ', response);
             
