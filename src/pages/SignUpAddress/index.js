@@ -4,6 +4,7 @@ import {Header, TextInput, Gap, Button, Select} from '../../components';
 import { useForm } from '../../Utils';
 import {useDispatch, useSelector} from 'react-redux';
 import Axios from 'axios';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const SingUpAddress = ({navigation}) => {
     const [form, setForm] = useForm({
@@ -26,11 +27,21 @@ const SingUpAddress = ({navigation}) => {
         Axios.post('http://10.0.2.2/foodbackend/public/api/register', data)
         .then((res)=>{
             console.log('data succes :',res.data);
+            showMessage('Register Success : ', 'success')
             navigation.replace('SuccessSignUp');
         })
         .catch((err)=> {
-            console.log('Sign Up error : ', err);
+            console.log('Sign Up error : ', err.response.data.data.message);
+            showToast(err?.response?.data?.data?.message)
         })
+    }
+
+    const showToast = (message, type) => {
+        showMessage({
+            message,
+            type: type === 'success' ? 'success' : 'danger',
+            backgroundColor : type === 'success' ? '#1ABC9C' : 'D9445E'
+          });
     }
 
     return (
