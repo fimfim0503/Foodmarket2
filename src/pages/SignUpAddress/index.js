@@ -24,14 +24,17 @@ const SingUpAddress = ({navigation}) => {
             ...registerReducer
         }
         console.log('data Register : ', data)
+        dispatch({type:'SET_LOADING', value : true})
         Axios.post('http://10.0.2.2/foodbackend/public/api/register', data)
         .then((res)=>{
             console.log('data succes :',res.data);
-            showMessage('Register Success : ', 'success')
+            dispatch({type:'SET_LOADING', value : false})
+            showMessage('Register Success : ', )
             navigation.replace('SuccessSignUp');
         })
         .catch((err)=> {
             console.log('Sign Up error : ', err.response.data.data.message);
+            dispatch({type:'SET_LOADING', value : false})
             showToast(err?.response?.data?.data?.message)
         })
     }
