@@ -1,10 +1,10 @@
-import React from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import {Header, TextInput, Gap, Button, Select} from '../../components';
-import { useForm } from '../../Utils';
-import {useDispatch, useSelector} from 'react-redux';
 import Axios from 'axios';
-import { showMessage, hideMessage } from "react-native-flash-message";
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Gap, Header, Select, TextInput } from '../../components';
+import { showMessage, useForm } from '../../Utils';
+
 
 const SingUpAddress = ({navigation}) => {
     const [form, setForm] = useForm({
@@ -15,7 +15,7 @@ const SingUpAddress = ({navigation}) => {
     })
 
     const dispatch=useDispatch();
-    const registerReducer=useSelector(state=>state.registerReducer)
+    const {registerReducer, photoReducer}=useSelector((state)=>state);
 
    const onSubmit = () => {
         console.log('form: ', form);
@@ -28,6 +28,27 @@ const SingUpAddress = ({navigation}) => {
         Axios.post('http://10.0.2.2/foodbackend/public/api/register', data)
         .then((res)=>{
             console.log('data succes :',res.data);
+            if(photoReducer.isUploadPhoto){
+
+                const photoForUpload = new FormData();
+                photoForUpload.append('file', photoReducer);
+                Axios.post('http://10.0.2.2/foodbackend/public/api/user/photo', 
+                photoForUpload,
+                {
+                    headers:{
+                        'Authorization' : `${res.data.data.token_type} ${res.data.data.access_token}`,
+                        'Content-Type' : 'multipart/form-date'
+                    }
+                })
+                .then(resUpload => {
+                    console.log('Succes Upload : ', resUpload)
+                })
+                .catch(err => {
+                    console.log('Gagal upload : ', err.response)
+                    showMessage('Upload photo gagal')
+    
+                })
+            }
             dispatch({type:'SET_LOADING', value : false})
             showMessage('Register Success : ', )
             navigation.replace('SuccessSignUp');
@@ -35,17 +56,11 @@ const SingUpAddress = ({navigation}) => {
         .catch((err)=> {
             console.log('Sign Up error : ', err.response.data.data.message);
             dispatch({type:'SET_LOADING', value : false})
-            showToast(err?.response?.data?.data?.message)
+            showMessage(err?.response?.data?.data?.message)
         })
-    }
+    };
 
-    const showToast = (message, type) => {
-        showMessage({
-            message,
-            type: type === 'success' ? 'success' : 'danger',
-            backgroundColor : type === 'success' ? '#1ABC9C' : 'D9445E'
-          });
-    }
+   
 
     return (
         <ScrollView contentContainerStyle={{flexGrow:1}} >
