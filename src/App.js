@@ -27,6 +27,7 @@ const App = () => {
       <Provider store={store}>
          <MainApp/>
       </Provider>
+      
     
   );
 };
