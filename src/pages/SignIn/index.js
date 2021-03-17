@@ -1,11 +1,11 @@
 
 import Axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button, Gap, Header, TextInput } from '../../components';
 import { signInAction } from '../../redux/action/auth';
-import { useForm } from '../../Utils';
+import { getData, useForm } from '../../Utils';
 
 const SignIn = ({navigation}) => {
     // const [email, setEmail] =useState('');
@@ -17,6 +17,9 @@ const SignIn = ({navigation}) => {
     })
 
     const dispatch = useDispatch();
+    
+    
+    
 
     const onSubmit =()=> {
        dispatch(signInAction(form, navigation))
